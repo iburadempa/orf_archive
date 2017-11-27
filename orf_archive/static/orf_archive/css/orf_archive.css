@@ -1,0 +1,12 @@
+td {
+    vertical-align: top;
+}
+
+body {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+li {
+    list-style-type: none;
+}

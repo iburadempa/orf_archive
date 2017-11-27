@@ -1,0 +1,22 @@
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/pure-min.css' %}">
+    <link rel="stylesheet" href="{% static 'orf_archive/css/orf_archive.css' %}">
+</head>
+<body>
+<div class="header">
+<h1><a href="{% url 'index' %}">ORF Ö1 Archiv</a> {{ day }}</h1>
+</div>
+<table class="pure-table">
+{% for p in programs %}
+     <tr>
+          <td>{{ p.time }}</td>
+          <td>{% for file in p.files %}<a href="{{ file }}">MP3</a><br>{% endfor %}</td>
+          <td><b>{{ p.title }}</b>{% if p.ressort %} (Ressort: {{ p.ressort }}){% endif %}{% if p.subtitle %}</ br>{{ p.subtitle|safe }}{% endif %}{% if p.description %}</ br>{{ p.description|safe }}{% endif %}</td>
+     </tr>
+{% endfor %}
+</table>
+</body>
+</html>
+

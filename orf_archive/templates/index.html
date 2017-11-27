@@ -1,0 +1,41 @@
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/pure-min.css' %}">
+    <link rel="stylesheet" href="{% static 'orf_archive/css/orf_archive.css' %}">
+    <link rel="stylesheet" href="{% static 'orf_archive/css/jquery-ui.min.css' %}">
+    <script src="{% static 'orf_archive/js/jquery.min.js' %}"></script>
+    <script src="{% static 'orf_archive/js/jquery-ui.min.js' %}"></script>
+    <script>
+$(document).ready(function() {
+    $('.datepicker').datepicker();
+    $('.datepicker').datepicker("option", "dateFormat", "yy-mm-dd");
+    $('.datepicker').datepicker("option", "minDate", new Date("{{ min_date }}"));
+    $('.datepicker').datepicker("option", "maxDate", new Date("{{ max_date }}"));
+    $('.datepicker').datepicker("option", "dayNamesMin", [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ]);
+    $('.datepicker').datepicker("option", "defaultDate", -1);
+    $('.datepicker').datepicker("option", "firstDay", 1);
+    $('.datepicker').datepicker("option", "monthNames", [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ]);
+    $('.datepicker').datepicker("option", "onClose", function(day, dp) {
+        $("#day_form").submit();
+    });
+});
+    </script>
+</head>
+<body id="index">
+<div class="header">
+<h1>ORF Ö1 Archiv</h1>
+(beginnt {{ min_date }})
+</div>
+<form action="index" id="day_form" method="POST">
+    {% csrf_token %}
+    Tag: <input class="datepicker" name="day" value="{{ yesterday }}" />
+</form>
+<ul>
+{% for day in days %}
+    <li><a href="day/{{ day.iso }}">{{ day.name }}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>
+
